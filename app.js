@@ -14,59 +14,28 @@ const app = express();
 
 app.use(express.json());
 
-app.get("/", (req, res) => {
-  res.json({
-    success: true,
-    message: "Welcome to the Astronaut API",
-  });
-});
+
 
 //ticket 1 - get all astronauts
 app.get('/astronauts', async(req, res) => {
   try {
-  const astronauts = await getAstronauts();
-  res.json({
+  const astros = await getAstronauts();
+  res.status(200).json({
     success: true,
-    payload: astronauts,
+    payload: astros,
   });
   } catch (error) {
+    console.log(error);
     res.status(400).json({
       success: false,
-      payload: error.message,
+      payload: null,
     });
   }
 });
 
 //ticket 2 - create a new astronaut
-app.post('/astronauts', async(req, res) => {
-  try {
-    const astronaut = await createAstronaut(req.body);
-    res.json({
-      success: true,
-      payload: astronaut,
-    });
-  } catch (error) {
-    res.status(400).json({
-      success: false,
-      payload: error.message,
-    });
-  }
-});
-
-//ticket 3 - get astronaut by id
-app.get('/astronauts/:id', async(req, res) => {
-  try {
-    const astronaut = await getAstronautById(req.params.id);
-    res.json({
-      success: true,
-      payload: astronaut});
-  } catch (error) {
-      res.status(400).json({
-        success: false,
-        payload: error.message,
-    });
-  }
-});
+//ticket 3 - get an astronaut by id
+//ticket 4 - update an astronaut by id
 
 
 /* 
