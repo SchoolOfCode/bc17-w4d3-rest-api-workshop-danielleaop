@@ -14,6 +14,30 @@ const app = express();
 
 app.use(express.json());
 
+app.get("/", (req, res) => {
+  res.json({
+    success: true,
+    message: "Welcome to the Astronaut API",
+  });
+});
+
+app.get('/astronauts', async(req, res) => {
+  try {
+  const astronauts = await getAstronauts();
+  res.json({
+    success: true,
+    payload: astronauts,
+  });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      payload: error.message,
+    });
+  }
+});
+
+
+
 /* 
 
 All json responses for this tasks should follow the pattern:
