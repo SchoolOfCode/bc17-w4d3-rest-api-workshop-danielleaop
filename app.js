@@ -21,6 +21,7 @@ app.get("/", (req, res) => {
   });
 });
 
+//ticket 1 - get all astronauts
 app.get('/astronauts', async(req, res) => {
   try {
   const astronauts = await getAstronauts();
@@ -36,6 +37,36 @@ app.get('/astronauts', async(req, res) => {
   }
 });
 
+//ticket 2 - create a new astronaut
+app.post('/astronauts', async(req, res) => {
+  try {
+    const astronaut = await createAstronaut(req.body);
+    res.json({
+      success: true,
+      payload: astronaut,
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      payload: error.message,
+    });
+  }
+});
+
+//ticket 3 - get astronaut by id
+app.get('/astronauts/:id', async(req, res) => {
+  try {
+    const astronaut = await getAstronautById(req.params.id);
+    res.json({
+      success: true,
+      payload: astronaut});
+  } catch (error) {
+      res.status(400).json({
+        success: false,
+        payload: error.message,
+    });
+  }
+});
 
 
 /* 
